@@ -18,7 +18,7 @@ class GetAuthentication extends GetxController{
     _auth = FirebaseAuth.instance;
     _googleSignIn = GoogleSignIn();
     providerId = _auth?.currentUser?.providerData.elementAt(0).providerId;
-    print('User is: ${_auth?.currentUser}');
+    print('User is: ${user?.email}');
     print('Provider Id is: $providerId');
     _auth?.authStateChanges().listen((User? user) {
       if (user == null){
@@ -29,6 +29,8 @@ class GetAuthentication extends GetxController{
       }
     );
   }
+
+  get user => _auth?.currentUser;
 
 
   Future<dynamic> signUpWithEmailAndPassword(String username, String email, String password) async{
@@ -51,8 +53,8 @@ class GetAuthentication extends GetxController{
         
   
       }
-      else if (e.code == 'wrong-password'){
-        customSnackbar('Wrong Password', e.message);
+      else if (e.code == 'weak-password'){
+        customSnackbar('Weak Password', e.message);
         return false;
   
 
@@ -61,6 +63,14 @@ class GetAuthentication extends GetxController{
         return false;
   
       }
+    }
+  }
+
+  sendLinkVeriyEmail(){
+    try {
+      _auth?.currentUser?.sendEmailVerification();
+    } catch (e) {
+      print(e);
     }
   }
 

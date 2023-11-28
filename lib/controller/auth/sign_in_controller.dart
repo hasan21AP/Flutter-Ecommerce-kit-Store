@@ -72,11 +72,15 @@ class SignInControllerImpl extends SignInController {
   
   @override
   Future<UserCredential?> signInWithGoogle() async{
+    isLoading = true;
+    update();
     return await GetAuthentication().signInWithGoolge();
   }
   
   @override
   Future<dynamic> loginWithEmailAndPassword(email, password) async{
+    isLoading = true;
+    update();
     return await GetAuthentication().loginWithEmailAndPassword(email, password);
   }
   

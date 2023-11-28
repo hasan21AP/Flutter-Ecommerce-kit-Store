@@ -79,14 +79,15 @@ class SignInBody extends StatelessWidget {
                             relativisticHeight: .07,
                             circleRadius: 6,
                             onPressed: () async{
-                              var result = await controller.loginWithEmailAndPassword(
+                              if (controller.signIn() == true){
+                                var result = await controller.loginWithEmailAndPassword(
                                   controller.email.text, 
                                   controller.password.text);
-                              if (controller.signIn() == true){
                                   if (result != false){
                                     customCircularProgressIndicator(context);
-                                    controller.goToHomePage();
-                                  }
+                                    Future.delayed(const Duration(milliseconds: 800),
+                                    () => controller.goToHomePage());
+                                }
                               }
                             }
                           ),

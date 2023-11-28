@@ -108,15 +108,16 @@ class SignUpBody extends StatelessWidget {
                 relativisticHeight: .07,
                 circleRadius: 6,
                 onPressed: () async{
-                  var result = await controller.signUpWithEmailAndPassword(
+                  if (controller.signUp() == true &&
+                    controller.password.text == controller.rePassword.text){
+                      var result = await controller.signUpWithEmailAndPassword(
                         controller.username.text, 
                         controller.email.text, 
                         controller.password.text);
-                  if (controller.signUp() == true &&
-                    controller.password.text == controller.rePassword.text){
                       if (result != false){
-                      customCircularProgressIndicator(context);
-                        controller.goToHomePage();
+                        customCircularProgressIndicator(context);
+                        Future.delayed(const Duration(milliseconds: 800), 
+                        () => controller.goToHomePage());
                       }
                   }
                 }),
