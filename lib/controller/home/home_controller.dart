@@ -6,13 +6,15 @@ abstract class HomeController extends GetxController {
 
   logOut();
   goToSignInPage();
-  goToHomePage();
   sendEmailVerification();
+  changeStateOfLoading();
 
 }
 
 
 class HomeControllerImpl extends HomeController {
+
+  bool isLoading = true;
   
   
   @override
@@ -26,14 +28,15 @@ class HomeControllerImpl extends HomeController {
     await GetAuthentication().logout();
   }
   
-  @override
-  goToHomePage() {
-    Get.offAllNamed('/home');
-  }
-  
+
   @override
   sendEmailVerification() {
     GetAuthentication().sendLinkVeriyEmail();
   }
-
+  
+  @override
+  changeStateOfLoading() {
+    isLoading = !isLoading;
+    update();
+  }
 }

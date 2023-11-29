@@ -83,7 +83,7 @@ class SignInBody extends StatelessWidget {
                                 var result = await controller.loginWithEmailAndPassword(
                                   controller.email.text, 
                                   controller.password.text);
-                                  if (result != false){
+                                  if (result != null){
                                     customCircularProgressIndicator(context);
                                     Future.delayed(const Duration(milliseconds: 800),
                                     () => controller.goToHomePage());
