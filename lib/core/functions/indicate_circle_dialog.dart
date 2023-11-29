@@ -1,7 +1,6 @@
 import 'package:ecommerce_kit_store/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 customCircularProgressIndicator(BuildContext context){
     showDialog(context: context, 

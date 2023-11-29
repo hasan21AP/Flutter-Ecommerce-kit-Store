@@ -43,15 +43,17 @@ class HomeBodyNotVerified extends StatelessWidget {
                 relativisticWidth: 0.8,
                 relativisticHeight: .07,
                 circleRadius: 6,
-                onPressed: () {
+                onPressed: () async{
+                  await GetAuthentication().sendLinkVeriyEmail();
+                  if (!context.mounted) return;
                   CustomShowDialog(
                     isLoading: controller.isLoading,
                     context: context,
                     title: 'Email is Sent',
                     content: 'The verify link is sent your email go verify your email and then click ok',
-                    onConfirm: (){
+                    onConfirm: () async{
                       if (GetAuthentication().emailVerified == true){
-                        controller.logOut();
+                        await controller.logOut();
                         controller.goToSignInPage();
                       }else {
                         Get.back();

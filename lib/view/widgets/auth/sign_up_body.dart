@@ -9,6 +9,7 @@ import 'package:ecommerce_kit_store/core/custom/custom_forms.dart';
 import 'package:ecommerce_kit_store/core/custom/custom_space.dart';
 import 'package:ecommerce_kit_store/core/functions/indicate_circle_dialog.dart';
 import 'package:ecommerce_kit_store/core/functions/input_validation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -110,11 +111,11 @@ class SignUpBody extends StatelessWidget {
                 onPressed: () async{
                   if (controller.signUp() == true &&
                     controller.password.text == controller.rePassword.text){
-                      var result = await controller.signUpWithEmailAndPassword(
+                      User? result = await controller.signUpWithEmailAndPassword(
                         controller.username.text, 
                         controller.email.text, 
                         controller.password.text);
-                      if (result != false){
+                      if (result != null){
                         customCircularProgressIndicator(context);
                         Future.delayed(const Duration(milliseconds: 800), 
                         () => controller.goToHomePage());

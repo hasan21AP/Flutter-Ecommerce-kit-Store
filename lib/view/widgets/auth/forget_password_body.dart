@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ecommerce_kit_store/controller/auth/forget_password_controller.dart';
 import 'package:ecommerce_kit_store/core/constants/colors.dart';
 import 'package:ecommerce_kit_store/core/constants/images_assets.dart';
@@ -53,19 +54,29 @@ class ForgetPasswordBody extends StatelessWidget {
                   relativisticWidth: 0.9,
                   relativisticHeight: .07,
                   circleRadius: 6,
-                  onPressed: () {
-                    if (controller.enterEmail() == true){
-                    showDialog(context: context, 
-                    builder:
-                      (context) => const Center(child: 
-                      CircularProgressIndicator(
-                        color: AppColors.kMainColor 
-                        )
-                      ) 
-                    );
-                    controller.goToVerifyCodePage();
-                  }}),
-                  
+                  onPressed: () async{
+                    if (controller.enterEmail() == true) {
+                      await controller.sendResetPasswordLink(
+                        controller.email.text
+                      );
+                      if (!context.mounted) return;
+                      AwesomeDialog(
+                        context: context,
+                        title: 'Reset Password',
+                        titleTextStyle: Theme.of(context).textTheme.displayLarge,
+                        desc: 'We sent link to your email please go to your email and click the link to reset password',
+                        descTextStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: AppColors.kMainColor,
+                        ),
+                        dialogType: DialogType.info,
+                        animType: AnimType.leftSlide,
+                        btnOkOnPress: (){
+                          controller.goToSignInPage();
+                        },
+                    ).show();
+                  }
+                }
+              ),
             ],
           );
         }

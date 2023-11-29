@@ -1,6 +1,5 @@
 
 import 'package:ecommerce_kit_store/view/screens/auth/forget_password_view.dart';
-import 'package:ecommerce_kit_store/view/screens/auth/reset_password_view.dart';
 import 'package:ecommerce_kit_store/view/screens/auth/sign_in_view.dart';
 import 'package:ecommerce_kit_store/view/screens/auth/sign_up_view.dart';
 import 'package:ecommerce_kit_store/view/screens/auth/verify_code_view.dart';
@@ -33,10 +32,6 @@ import 'core/middleware/my_middleware.dart';
     transitionDuration: const Duration(milliseconds: 400)
     ),
     GetPage(name: AppRoutes.verifyCode, page:() => const VerifyCodeView(), 
-    transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 400)
-    ),
-    GetPage(name: AppRoutes.resetPassword, page:() => const ResetPasswordView(), 
     transition: Transition.native,
     transitionDuration: const Duration(milliseconds: 400)
     ),

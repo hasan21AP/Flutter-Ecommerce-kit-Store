@@ -1,5 +1,6 @@
 
 import 'package:ecommerce_kit_store/controller/auth/authentication_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +10,7 @@ abstract class SignUpController extends GetxController {
   goToHomePage();
   goToSignInPage();
   bool signUp();
-  Future<dynamic> signUpWithEmailAndPassword(username, email, password);
+  Future<User?> signUpWithEmailAndPassword(String username,String email,String password);
 }
 
 class SignUpControllerImpl extends SignUpController {
@@ -70,7 +71,7 @@ class SignUpControllerImpl extends SignUpController {
   }
   
   @override
-  Future<dynamic> signUpWithEmailAndPassword(username, email, password) async{
+  Future<User?> signUpWithEmailAndPassword(String username,String email,String password) async{
     return await GetAuthentication().signUpWithEmailAndPassword(username, email, password);
   }
 

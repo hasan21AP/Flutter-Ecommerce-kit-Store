@@ -19,7 +19,7 @@ class GetAuthentication extends GetxController{
     _googleSignIn = GoogleSignIn();
     providerId = _auth?.currentUser?.providerData.elementAt(0).providerId;
     print('User is: ${user?.email}');
-    print('Email Verified: ${emailVerified}');
+    print('Email Verified: $emailVerified');
     print('Provider Id is: $providerId');
     _auth?.authStateChanges().listen((User? user) {
       if (user == null){
@@ -35,7 +35,7 @@ class GetAuthentication extends GetxController{
   bool? get emailVerified => _auth?.currentUser?.emailVerified;
 
 
-  Future<dynamic> signUpWithEmailAndPassword(String username, String email, String password) async{
+  Future<User?> signUpWithEmailAndPassword(String username, String email, String password) async{
     try {
         final credential = await _auth?.createUserWithEmailAndPassword(
         email: email,
@@ -46,34 +46,59 @@ class GetAuthentication extends GetxController{
     }on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email'){
           customSnackbar('Invalid Email', e.message);
-          return false;
+          // return false;
     
       }
       else if (e.code == 'email-already-in-use'){
         customSnackbar('Email Error', e.message);
-        return false;
+        // return false;
         
   
       }
       else if (e.code == 'weak-password'){
         customSnackbar('Weak Password', e.message);
-        return false;
+        // return false;
   
 
       } else {
         customSnackbar('Error is ${e.code}', e.message);
-        return false;
+        // return false;
   
       }
     }
+    return null;
   }
 
-  sendLinkVeriyEmail(){
+  sendLinkVeriyEmail() async{
     try {
-      _auth?.currentUser?.sendEmailVerification();
+      await _auth?.currentUser?.sendEmailVerification();
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<bool?> sendLinkResetPassword(String email) async{
+    try {
+      await _auth?.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email'){
+          customSnackbar('Invalid Email', e.message);
+          // return false;
+      }
+      else if (e.code == 'user-not-found'){
+        customSnackbar('User not found', e.message);
+        // return false;
+      }else if (e.code == 'invalid-credential'){
+        customSnackbar('Invalid Credential', 'Email is wrong');
+        // return false;
+      } 
+      else {
+        customSnackbar('Error is ${e.code}', '${e.message}');
+        // return false;
+      }
+    }
+    return null;
   }
 
   Future<User?> loginWithEmailAndPassword(String email, String password) async{
@@ -140,7 +165,7 @@ class GetAuthentication extends GetxController{
 
   }
 
-  Future logout() async{
+  Future<void> logout() async{
     if (providerId == 'google.com'){
       await _auth?.signOut();
       await _googleSignIn?.disconnect();

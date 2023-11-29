@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 abstract class HomeController extends GetxController {
 
-  logOut();
+  Future<void> logOut();
   goToSignInPage();
   sendEmailVerification();
   changeStateOfLoading();
@@ -24,7 +24,7 @@ class HomeControllerImpl extends HomeController {
   }
   
   @override
-  logOut() async{
+  Future<void> logOut() async{
     await GetAuthentication().logout();
   }
   

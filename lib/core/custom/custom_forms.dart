@@ -77,7 +77,7 @@ class CustomTextFieldFormForEmail extends StatelessWidget {
     this.validator, this.formKey, 
     this.myController, this.hintText, 
     this.textColor, this.iconColor, 
-    this.borderColor, this.iconFocusColor}
+    this.borderColor, this.iconFocusColor, this.keyboardType}
     );
 
   final String? text;
@@ -92,6 +92,7 @@ class CustomTextFieldFormForEmail extends StatelessWidget {
   final Color? iconColor;
   final Color? borderColor;
   final Color? iconFocusColor;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,7 @@ class CustomTextFieldFormForEmail extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: TextFormField(
           controller: myController,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: keyboardType,
           autocorrect: true,
           validator: validator,
           decoration: InputDecoration(

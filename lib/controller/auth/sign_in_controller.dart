@@ -13,7 +13,7 @@ abstract class SignInController extends GetxController {
   goToForgetPasswordPage();
   bool signIn();
   Future<UserCredential?> signInWithGoogle();
-  Future<dynamic> loginWithEmailAndPassword(email, password);
+  Future<User?> loginWithEmailAndPassword(String email,String password);
   changeStateOfLoading();
 }
 
@@ -78,7 +78,7 @@ class SignInControllerImpl extends SignInController {
   }
   
   @override
-  Future<dynamic> loginWithEmailAndPassword(email, password) async{
+  Future<User?> loginWithEmailAndPassword(String email,String password) async{
     isLoading = true;
     update();
     return await GetAuthentication().loginWithEmailAndPassword(email, password);
