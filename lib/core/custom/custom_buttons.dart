@@ -14,30 +14,30 @@ class CustomGeneralButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  height: 60,
-                  width: SizeConfig.screenWidth! * 0.8,
-                  decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.circular(15),
+      onTap: onTap,
+      child: Container(
+        height: 60,
+        width: SizeConfig.screenWidth! * 0.8,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+                  text!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xFFFFF9FF),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    height: 0.06,
                   ),
-                  child: Center(
-                    child: Text(
-                            text!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Color(0xFFFFF9FF),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              height: 0.06,
-                            ),
-                          ),
-                        ),
-                      )
-                  );
-                }
-              }
+                ),
+              ),
+            )
+        );
+      }
+    }
 
 
 class CustomElevetedButton extends StatelessWidget {
@@ -59,19 +59,19 @@ class CustomElevetedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-                  onPressed: onPressed,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mainColor,
-                    foregroundColor: secondColor,
-                    minimumSize: Size(SizeConfig.screenWidth! * relativisticWidth!, SizeConfig.screenHeight! * relativisticHeight!),
-                    enableFeedback: false,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(circleRadius!),
-                    ),
-                    textStyle: textStyle
-                  ), 
-                  child: Text(text!),
-                  );
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: mainColor,
+        foregroundColor: secondColor,
+        minimumSize: Size(SizeConfig.screenWidth! * relativisticWidth!, SizeConfig.screenHeight! * relativisticHeight!),
+        enableFeedback: false,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(circleRadius!),
+        ),
+        textStyle: textStyle
+      ), 
+      child: Text(text!),
+      );
   }
 }              
 
@@ -107,21 +107,21 @@ class CustomSignInButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-            backgroundColor: mainColor,
-            foregroundColor: secondColor,
-            elevation: elevation,
-            minimumSize: Size(
-              SizeConfig.screenWidth! * relativisticWidth!, 
-              SizeConfig.screenHeight! * relativisticHeight!),
-            enableFeedback: false,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: borderWidth!,
-                color: borderColor!,
-              ),
-              borderRadius: BorderRadius.circular(circleRadius!),
-            ),
-            textStyle: textStyle,
+        backgroundColor: mainColor,
+        foregroundColor: secondColor,
+        elevation: elevation,
+        minimumSize: Size(
+          SizeConfig.screenWidth! * relativisticWidth!, 
+          SizeConfig.screenHeight! * relativisticHeight!),
+        enableFeedback: false,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: borderWidth!,
+            color: borderColor!,
+          ),
+          borderRadius: BorderRadius.circular(circleRadius!),
+        ),
+        textStyle: textStyle,
       ),
       child: SizedBox(
         width: SizeConfig.screenWidth! * 0.84,

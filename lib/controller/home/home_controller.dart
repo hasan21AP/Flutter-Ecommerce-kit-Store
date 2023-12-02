@@ -1,5 +1,6 @@
 
 import 'package:ecommerce_kit_store/controller/auth/authentication_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class HomeController extends GetxController {
@@ -8,6 +9,8 @@ abstract class HomeController extends GetxController {
   goToSignInPage();
   sendEmailVerification();
   changeStateOfLoading();
+  bool searchProduct();
+  selectedIndex(int index);
 
 }
 
@@ -15,6 +18,16 @@ abstract class HomeController extends GetxController {
 class HomeControllerImpl extends HomeController {
 
   bool isLoading = true;
+  GlobalKey<FormState> searchState = GlobalKey<FormState>();
+  late TextEditingController search;
+  int currentIndex = 0;
+
+
+  @override
+  void onInit() {
+    search = TextEditingController();
+    super.onInit();
+  }
   
   
   @override
@@ -37,6 +50,22 @@ class HomeControllerImpl extends HomeController {
   @override
   changeStateOfLoading() {
     isLoading = !isLoading;
+    update();
+  }
+  
+  @override
+  bool searchProduct() {
+    var searchData = searchState.currentState;
+    if (searchData!.validate()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
+  @override
+  selectedIndex(int index) {
+    currentIndex = index;
     update();
   }
 }

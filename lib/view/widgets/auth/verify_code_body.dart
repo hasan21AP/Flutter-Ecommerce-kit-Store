@@ -52,7 +52,7 @@ class VerifyCodeBody extends StatelessWidget {
                       )
                             )
                           );
-                    controller.goToResetPasswordPage();
+                    // controller.goToResetPasswordPage();
           
                   }, 
                );

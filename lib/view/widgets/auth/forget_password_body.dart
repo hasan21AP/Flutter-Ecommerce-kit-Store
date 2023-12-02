@@ -1,11 +1,10 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ecommerce_kit_store/controller/auth/forget_password_controller.dart';
 import 'package:ecommerce_kit_store/core/constants/colors.dart';
-import 'package:ecommerce_kit_store/core/constants/images_assets.dart';
-import 'package:ecommerce_kit_store/core/custom/custom_buttons.dart';
-import 'package:ecommerce_kit_store/core/custom/custom_forms.dart';
 import 'package:ecommerce_kit_store/core/custom/custom_space.dart';
-import 'package:ecommerce_kit_store/core/functions/input_validation.dart';
+import 'package:ecommerce_kit_store/data/model/button_model/elevated_button_model.dart';
+import 'package:ecommerce_kit_store/data/model/sign_in/upper_sign_model.dart';
+import 'package:ecommerce_kit_store/data/model/text_field_model/general_text_field_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,42 +19,24 @@ class ForgetPasswordBody extends StatelessWidget {
         builder: (controller) {
           return Column(
             children: [
-              const VerticalSpace(value: 5),
-              Image.asset(ImagesAssets.iconImage),
-              const VerticalSpace(value: 2),
-              Text(
-                'Welcome to E-com',
-                style: Theme.of(context).textTheme.displayLarge,
+              const UpperSignModel(
+                title: 'Rese Password',
+                supTitle: 'Enter your Email to continue',
               ),
-              const VerticalSpace(value: 1),
-              Text(
-                'Check Your Email',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              const VerticalSpace(value: 10),
-              CustomTextFieldFormForEmail(
-                formKey: controller.emailState,
-                validator: (val) => validInput(val!, 8, 30, 'email'),
+              const VerticalSpace(value: 7),
+              GeneralTextFieldModel(
+                formKey: controller.emailState, 
                 myController: controller.email,
-                borderColor: AppColors.kMainColor,
-                focusBorderColor: AppColors.kMainColor,
-                hintText: 'Enter Your Email',
+                validateType: 'email',
+                keyboardType: TextInputType.emailAddress,
                 icon: const Icon(Icons.email_outlined),
-                textColor: AppColors.kGrayColor,
-                iconColor: AppColors.kGrayColor,
-                iconFocusColor: AppColors.kMainColor,
-              ),
+                hintText: 'Enter Your Email',
+                ),
               const VerticalSpace(value: 2),
-              CustomElevetedButton(
-                  text: 'Check',
-                  textStyle: Theme.of(context).textTheme.displayMedium,
-                  mainColor: AppColors.kMainColor,
-                  secondColor: AppColors.kWhiteColor,
-                  relativisticWidth: 0.9,
-                  relativisticHeight: .07,
-                  circleRadius: 6,
-                  onPressed: () async{
-                    if (controller.enterEmail() == true) {
+              ElevatedButtonModel(
+                text: 'Continue',
+                onPressed: () async{
+                  if (controller.enterEmail() == true) {
                       await controller.sendResetPasswordLink(
                         controller.email.text
                       );
@@ -75,7 +56,7 @@ class ForgetPasswordBody extends StatelessWidget {
                         },
                     ).show();
                   }
-                }
+                },
               ),
             ],
           );

@@ -1,6 +1,8 @@
 
+import 'package:ecommerce_kit_store/controller/database/firestore_user.dart';
 import 'package:ecommerce_kit_store/core/functions/show_snackbar.dart';
 import 'package:ecommerce_kit_store/core/services/services.dart';
+import 'package:ecommerce_kit_store/data/model/user_model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -31,17 +33,20 @@ class GetAuthentication extends GetxController{
     );
   }
 
+
   User? get user => _auth?.currentUser;
   bool? get emailVerified => _auth?.currentUser?.emailVerified;
 
 
   Future<User?> signUpWithEmailAndPassword(String username, String email, String password) async{
     try {
+        _auth?.currentUser?.updateDisplayName(username);
         final credential = await _auth?.createUserWithEmailAndPassword(
         email: email,
         password: password
-        );
-        _auth?.currentUser?.updateDisplayName(username);
+        ).then((user) async{
+          saveUser(user);
+        });
         return credential?.user;
     }on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email'){
@@ -150,15 +155,13 @@ class GetAuthentication extends GetxController{
     );
 
   // Once signed in, return the UserCredential
-    final authResult = await _auth?.signInWithCredential(credential);
-    assert(!authResult!.user!.isAnonymous);
-    assert(await authResult?.user?.getIdToken() != null);
-    final User? currentUser = _auth?.currentUser;
-    assert(authResult?.user?.uid == currentUser?.uid);
+    final authResult = await _auth?.signInWithCredential(credential).then((user) async{
+      saveUser(user);
+    });
     return authResult;
 
-    }on Exception catch (e) {
-      print(e);
+    }on FirebaseAuthException catch (e) {
+      print("The Exception is: $e");
       return null;
     }
     
@@ -173,6 +176,15 @@ class GetAuthentication extends GetxController{
       await _auth?.signOut();
     }
     myServices.sharedPreferences.clear();
+  }
+
+  void saveUser(UserCredential user) async{
+    await FireStoreUser().addUserToFireStore(UserModel(
+      userId: user.user?.uid,
+      email: user.user?.email,
+      name: user.user?.displayName,
+      pic: ''
+    ));
   }
 
 }

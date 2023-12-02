@@ -13,6 +13,9 @@ class MyMiddleware extends GetMiddleware {
     if (myServices.sharedPreferences.getString("Is Signed") == "yes"){
       return const RouteSettings(name: '/home');
     }
+    if (myServices.sharedPreferences.getString("Is Signed") == "admin"){
+      return const RouteSettings(name: '/admin');
+    }
       return null;
   }
   

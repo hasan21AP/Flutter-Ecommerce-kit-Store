@@ -1,4 +1,5 @@
 
+import 'package:ecommerce_kit_store/core/binding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -27,6 +28,7 @@ class ECorommeceKitStore extends StatelessWidget {
     GetAuthentication();
     SizeConfig().init(context);
     return  GetMaterialApp(
+      initialBinding: Binding(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',

@@ -6,5 +6,7 @@ class AppRoutes {
   static const String forgetPassword = '/forgetPassword';
   static const String verifyCode = '/verifyCode';
   static const String resetPassword = '/resetPassword';
+  static const String admin = '/admin';
+  static const String addProduct = '/addProduct';
   
 }

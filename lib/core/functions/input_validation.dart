@@ -42,5 +42,11 @@ validInput(String val, int min, int max, String type){
   if (val.length > max){
     return "Can't be more than $max";
   }
+
+  if (type == 'search'){
+    if (GetUtils.isNumericOnly(val)){
+      return "Wrong! Don't just enter numbers";
+    } 
+  }
   }
 }

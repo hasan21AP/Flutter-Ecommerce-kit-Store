@@ -1,14 +1,11 @@
-// import 'package:ecorommece_app_kit/controller/auth/authentication_controller.dart';
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:ecommerce_kit_store/controller/auth/sign_up_controller.dart';
-import 'package:ecommerce_kit_store/core/constants/colors.dart';
-import 'package:ecommerce_kit_store/core/constants/images_assets.dart';
-import 'package:ecommerce_kit_store/core/custom/custom_buttons.dart';
-import 'package:ecommerce_kit_store/core/custom/custom_forms.dart';
 import 'package:ecommerce_kit_store/core/custom/custom_space.dart';
 import 'package:ecommerce_kit_store/core/functions/indicate_circle_dialog.dart';
-import 'package:ecommerce_kit_store/core/functions/input_validation.dart';
+import 'package:ecommerce_kit_store/data/model/sign_in/bottom_sign_model.dart';
+import 'package:ecommerce_kit_store/data/model/button_model/elevated_button_model.dart';
+import 'package:ecommerce_kit_store/data/model/sign_in/upper_sign_model.dart';
+import 'package:ecommerce_kit_store/data/model/text_field_model/general_text_field_model.dart';
+import 'package:ecommerce_kit_store/data/model/text_field_model/password_text_feild_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,89 +22,48 @@ class SignUpBody extends StatelessWidget {
         builder: (controller) {
           return Column(
             children: [
-              const VerticalSpace(value: 5),
-              Image.asset(ImagesAssets.iconImage),
-              const VerticalSpace(value: 2),
-              Text(
-                'Welcome to E-com',
-                style: Theme.of(context).textTheme.displayLarge,
+              const UpperSignModel(
+                title: 'Let’s Get Started',
+                supTitle: 'Create an new account',
               ),
-              const VerticalSpace(value: 1),
-              Text(
-                'Create an new account',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              const VerticalSpace(value: 3),
-              CustomTextFieldFormForUserName(
-                formKey: controller.usernameState,
-                validator: (val) => validInput(val!, 5, 15, 'username'),
+              GeneralTextFieldModel(
+                formKey: controller.usernameState, 
                 myController: controller.username,
-                borderColor: AppColors.kMainColor,
-                focusBorderColor: AppColors.kMainColor,
-                hintText: 'Full Name',
+                validateType: 'username',
+                keyboardType: TextInputType.name,
                 icon: const Icon(FontAwesomeIcons.user),
-                textColor: AppColors.kGrayColor,
-                iconColor: AppColors.kGrayColor,
-                iconFocusColor: AppColors.kMainColor,
-              ),
+                hintText: 'Full Name',
+                ),
               const VerticalSpace(value: 1),
-              CustomTextFieldFormForEmail(
-                formKey: controller.emailState,
-                validator: (val) => validInput(val!, 7, 30, 'email'),
+              GeneralTextFieldModel(
+                formKey: controller.emailState, 
                 myController: controller.email,
-                borderColor: AppColors.kMainColor,
-                focusBorderColor: AppColors.kMainColor,
-                hintText: 'Your Email',
+                validateType: 'email',
+                keyboardType: TextInputType.emailAddress,
                 icon: const Icon(Icons.email_outlined),
-                textColor: AppColors.kGrayColor,
-                iconColor: AppColors.kGrayColor,
-                iconFocusColor: AppColors.kMainColor,
-              ),
+                hintText: 'Your Email',
+                ),
               const VerticalSpace(value: 1),
-              CustomTextFieldFormForPassword(
-                formKey: controller.passwordState,
-                validator: (val) => validInput(val!, 8, 20, 'password'),
+              PasswordTextFieldModel(
+                formKey: controller.passwordState, 
                 myController: controller.password,
-                obscureText: controller.passwordVisible,
-                borderColor: AppColors.kMainColor,
-                focusBorderColor: AppColors.kMainColor,
+                validateType: 'password',
+                passwordVisible: controller.passwordVisible,
+                onPressed: () => controller.changeState(),
                 hintText: 'Password',
-                prefixIcon: const Icon(Icons.lock_outline),
-                onPressed: () => controller.changeState(),
-                sefixIcon: Icon(controller.passwordVisible
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined),
-                textColor: AppColors.kGrayColor,
-                iconColor: AppColors.kGrayColor,
-                iconFocusColor: AppColors.kMainColor,
-              ),
+                ),
               const VerticalSpace(value: 1),
-              CustomTextFieldFormForPassword(
-                formKey: controller.rePasswordState,
-                validator: (val) => validInput(val!, 8, 20, 'password'),
+              PasswordTextFieldModel(
+                formKey: controller.rePasswordState, 
                 myController: controller.rePassword,
-                obscureText: controller.passwordVisible,
-                borderColor: AppColors.kMainColor,
-                focusBorderColor: AppColors.kMainColor,
-                hintText: 'Password Again',
-                prefixIcon: const Icon(Icons.lock_outline),
+                validateType: 'password',
+                passwordVisible: controller.passwordVisible,
                 onPressed: () => controller.changeState(),
-                sefixIcon: Icon(controller.passwordVisible
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined),
-                textColor: AppColors.kGrayColor,
-                iconColor: AppColors.kGrayColor,
-                iconFocusColor: AppColors.kMainColor,
-              ),
+                hintText: 'Password Again',
+                ),
               const VerticalSpace(value: 2),
-              CustomElevetedButton(
+              ElevatedButtonModel(
                 text: 'Sign Up',
-                textStyle: Theme.of(context).textTheme.displayMedium,
-                mainColor: AppColors.kMainColor,
-                secondColor: AppColors.kWhiteColor,
-                relativisticWidth: 0.9,
-                relativisticHeight: .07,
-                circleRadius: 6,
                 onPressed: () async{
                   if (controller.signUp() == true &&
                     controller.password.text == controller.rePassword.text){
@@ -116,31 +72,22 @@ class SignUpBody extends StatelessWidget {
                         controller.email.text, 
                         controller.password.text);
                       if (result != null){
+                        if (!context.mounted) return;
                         customCircularProgressIndicator(context);
                         Future.delayed(const Duration(milliseconds: 800), 
                         () => controller.goToHomePage());
                       }
                   }
-                }),
+                },
+              ),
               const VerticalSpace(value: 3),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  'have a account?',
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
-                InkWell(
-                    enableFeedback: false,
-                    onTap: () {
-                      controller.goToSignInPage();
-                    },
-                    child: Text(' Sign In',
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: AppColors.kMainColor,
-                        fontWeight: FontWeight.w700,
-                    )
-                  )
-                )
-              ])
+              BottomSignModel(
+                  text: 'have a account?',
+                  onTapText: ' Sign In',
+                  onTap: (){
+                    controller.goToSignInPage();
+                },
+              )
             ],
           );
         }

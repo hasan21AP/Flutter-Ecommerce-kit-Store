@@ -1,4 +1,5 @@
 
+import 'package:ecommerce_kit_store/core/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ abstract class SignInController extends GetxController {
   Future<UserCredential?> signInWithGoogle();
   Future<User?> loginWithEmailAndPassword(String email,String password);
   changeStateOfLoading();
+  goToAdminPage();
 }
 
 class SignInControllerImpl extends SignInController {
@@ -25,7 +27,7 @@ class SignInControllerImpl extends SignInController {
   bool isLoading = true;
   late TextEditingController email;
   late TextEditingController password;
-  // MyServices myServices = Get.find();
+  MyServices myServices = Get.find();
 
   @override
   void onInit() {
@@ -62,10 +64,8 @@ class SignInControllerImpl extends SignInController {
     var emailData = emailState.currentState;
     var passwordData = passwordState.currentState;
     if (emailData!.validate() && passwordData!.validate()){
-      print('Valid');
       return true;
     }else {
-      print('InValid');
       return false;
     }
   }
@@ -88,6 +88,11 @@ class SignInControllerImpl extends SignInController {
   changeStateOfLoading() {
     isLoading = !isLoading;
     update();
+  }
+  
+  @override
+  goToAdminPage() {
+    Get.offAllNamed('/admin');
   }
 
 }
