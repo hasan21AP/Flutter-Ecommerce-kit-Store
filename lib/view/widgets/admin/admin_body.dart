@@ -6,15 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
-class AdminBody extends StatelessWidget {
+class AdminBody extends GetWidget<AdminControllerImpl> {
   const AdminBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(AdminControllerImpl());
-    return GetBuilder<AdminControllerImpl>(
-      builder: (controller) {
-        return Column(
+    return Column(
           children: [
             const Center(
               child: UpperSignModel(
@@ -34,12 +31,9 @@ class AdminBody extends StatelessWidget {
               text: 'Add Category',
               onPressed: (){
                 
-              },
-            ),
-          ],
-          
-        );
-      }
+          },
+        ),
+      ], 
     );
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:ecommerce_kit_store/controller/auth/authentication_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,8 @@ abstract class SignUpController extends GetxController {
   goToHomePage();
   goToSignInPage();
   bool signUp();
-  Future<User?> signUpWithEmailAndPassword(String username,String email,String password);
+  Future<User?> signUpWithEmailAndPassword(String email,String password, BuildContext context);
+  changeStateOfLoading();
 }
 
 class SignUpControllerImpl extends SignUpController {
@@ -19,13 +19,13 @@ class SignUpControllerImpl extends SignUpController {
   GlobalKey<FormState> emailState = GlobalKey<FormState>();
   GlobalKey<FormState> passwordState = GlobalKey<FormState>();
   GlobalKey<FormState> rePasswordState = GlobalKey<FormState>();
-
   bool passwordVisible = true;
 
   late TextEditingController username;
   late TextEditingController email;
   late TextEditingController password;
   late TextEditingController rePassword;
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -50,7 +50,7 @@ class SignUpControllerImpl extends SignUpController {
   
   @override
   goToSignInPage() {
-    Get.toNamed('/signIn');
+    Get.offAllNamed('/signIn');
     Get.deleteAll();
   }
   
@@ -71,9 +71,17 @@ class SignUpControllerImpl extends SignUpController {
   }
   
   @override
-  Future<User?> signUpWithEmailAndPassword(String username,String email,String password) async{
-    return await GetAuthentication().signUpWithEmailAndPassword(username, email, password);
+  Future<User?> signUpWithEmailAndPassword(String email,String password, BuildContext context) async{
+    isLoading = true;
+    update();
+    return await GetAuthentication().signUpWithEmailAndPassword(email, password, context);
   }
-
+  
+  @override
+  changeStateOfLoading() {
+    isLoading = !isLoading;
+    update();
+  }
+  
 
 }

@@ -5,15 +5,22 @@ import 'package:ecommerce_kit_store/view/widgets/home/home_bod_not_verified.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'home_screens/home_screen_view.dart';
 
-Widget? body(bool? emailVerified){
+Widget body(bool? emailVerified){
   if (emailVerified == true){
-    return const HomeScreenView();
+    return const BottomNavigationBarModel();
   }else if (emailVerified == false){
-    return const HomeBodyNotVerified();
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0),
+      body: const HomeBodyNotVerified(),
+    );
   }else {
-    return const HomeBodyNotVerified();
+    return const Scaffold(
+      body: HomeBodyNotVerified(),
+    );
   }
 } 
 
@@ -25,6 +32,6 @@ class HomeView extends StatelessWidget {
     Get.put(HomeControllerImpl());
     GetAuthentication getAuthentication = GetAuthentication();
     print('Email Verified: ${getAuthentication.emailVerified}');
-    return const BottomNavigationBarModel();
+    return body(getAuthentication.emailVerified);
   }
 }

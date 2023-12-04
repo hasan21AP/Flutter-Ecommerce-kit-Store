@@ -10,12 +10,12 @@ import 'package:get/get.dart';
 class Binding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => GetAuthentication());
-    Get.lazyPut(() => HomeControllerImpl());
-    Get.lazyPut(() => SignInControllerImpl());
-    Get.lazyPut(() => SignUpControllerImpl());
-    Get.lazyPut(() => ForgetPasswordControllerImpl());
-    Get.lazyPut(() => AdminControllerImpl());
+    Get.lazyPut(() => GetAuthentication(), fenix: true);
+    Get.lazyPut(() => HomeControllerImpl(), fenix: true);
+    Get.lazyPut(() => SignInControllerImpl(), fenix: true);
+    Get.lazyPut(() => SignUpControllerImpl(), fenix: true);
+    Get.lazyPut(() => ForgetPasswordControllerImpl(), fenix: true);
+    Get.lazyPut(() => AdminControllerImpl(), fenix: true);
   }
 
 }

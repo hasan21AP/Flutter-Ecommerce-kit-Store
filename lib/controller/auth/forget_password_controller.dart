@@ -43,6 +43,7 @@ class ForgetPasswordControllerImpl extends ForgetPasswordController {
   @override
   goToSignInPage() {
     Get.offAllNamed('/signIn');
+    Get.deleteAll();
   }
 
 

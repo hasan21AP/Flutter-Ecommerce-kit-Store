@@ -9,17 +9,15 @@ import 'package:ecommerce_kit_store/data/model/on_pressed_text_model/on_pressed_
 import 'package:ecommerce_kit_store/data/model/sign_in/upper_sign_model.dart';
 import 'package:ecommerce_kit_store/data/model/text_field_model/general_text_field_model.dart';
 import 'package:ecommerce_kit_store/data/model/text_field_model/password_text_feild_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-class SignInBody extends StatelessWidget {
+class SignInBody extends GetWidget<SignInControllerImpl> {
   const SignInBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SignInControllerImpl());
     return Center(
             child: GetBuilder<SignInControllerImpl>(
               builder: (controller) {
@@ -51,15 +49,14 @@ class SignInBody extends StatelessWidget {
                       text: 'Sign In',
                       onPressed: () async{
                         if (controller.signIn() == true){
-                        User? result = await controller.loginWithEmailAndPassword(
-                          controller.email.text, 
-                          controller.password.text);
-                          if (result != null){
-                            if (!context.mounted) return;
-                            customCircularProgressIndicator(context);
-                            Future.delayed(const Duration(milliseconds: 800),
-                            () => controller.goToHomePage());
-                          }
+                          customCircularProgressIndicator(context);
+                          if (await controller.loginWithEmailAndPassword(
+                                controller.email.text, 
+                                controller.password.text) == null) {
+                                  await Future.delayed(const Duration(seconds: 5), (){
+                                    Get.back();
+                                  });
+                                }
                         }
                       },
                     ),
@@ -70,14 +67,9 @@ class SignInBody extends StatelessWidget {
                       text: 'Login with Google',
                       icon: FontAwesomeIcons.google,
                       onPressed: () async{
-                        customCircularProgWithVar(context, controller.isLoading);
-                        if (await controller.signInWithGoogle() != null){
-                          controller.goToHomePage();
-                        }else {
-                          controller.changeStateOfLoading();
-                          if (!context.mounted) return;
-                          customCircularProgWithVar(context, controller.isLoading);
-                          
+                        customCircularProgressIndicator(context);
+                        if (await controller.signInWithGoogle() == null){
+                          Get.back();
                         }
                       },
                     ),

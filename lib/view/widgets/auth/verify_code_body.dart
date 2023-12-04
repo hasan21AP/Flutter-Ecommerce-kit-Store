@@ -13,7 +13,6 @@ class VerifyCodeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(VerifyCodeControllerImpl());
     return Center(
       child: Column(
         children: [

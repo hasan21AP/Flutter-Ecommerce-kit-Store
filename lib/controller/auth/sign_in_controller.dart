@@ -1,5 +1,3 @@
-
-import 'package:ecommerce_kit_store/core/services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +25,6 @@ class SignInControllerImpl extends SignInController {
   bool isLoading = true;
   late TextEditingController email;
   late TextEditingController password;
-  MyServices myServices = Get.find();
 
   @override
   void onInit() {
@@ -49,7 +46,6 @@ class SignInControllerImpl extends SignInController {
   
   @override
   goToHomePage() {
-    // print(GetAuthentication().user);
     Get.offAllNamed('/home');
     Get.deleteAll();
   }

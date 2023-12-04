@@ -1,14 +1,15 @@
-
 import 'package:ecommerce_kit_store/controller/database/firestore_user.dart';
 import 'package:ecommerce_kit_store/core/functions/show_snackbar.dart';
+import 'package:ecommerce_kit_store/core/functions/update_username.dart';
 import 'package:ecommerce_kit_store/core/services/services.dart';
 import 'package:ecommerce_kit_store/data/model/user_model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
-class GetAuthentication extends GetxController{
+class GetAuthentication {
 
   FirebaseAuth? _auth;
   GoogleSignIn? _googleSignIn;
@@ -22,7 +23,7 @@ class GetAuthentication extends GetxController{
     providerId = _auth?.currentUser?.providerData.elementAt(0).providerId;
     print('User is: ${user?.email}');
     print('Email Verified: $emailVerified');
-    print('Provider Id is: $providerId');
+    print('Username: $username');
     _auth?.authStateChanges().listen((User? user) {
       if (user == null){
         myServices.sharedPreferences.setString("Is Signed", "no");
@@ -36,38 +37,36 @@ class GetAuthentication extends GetxController{
 
   User? get user => _auth?.currentUser;
   bool? get emailVerified => _auth?.currentUser?.emailVerified;
+  
 
 
-  Future<User?> signUpWithEmailAndPassword(String username, String email, String password) async{
+  Future<User?> signUpWithEmailAndPassword(String email, 
+  String password, BuildContext context) async{
     try {
-        _auth?.currentUser?.updateDisplayName(username);
         final credential = await _auth?.createUserWithEmailAndPassword(
         email: email,
         password: password
-        ).then((user) async{
-          saveUser(user);
+        ).then((user) async{ 
+          await saveUser(user);
         });
+          Get.offAllNamed('/home');
+          Get.deleteAll();
         return credential?.user;
     }on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email'){
           customSnackbar('Invalid Email', e.message);
-          // return false;
     
       }
       else if (e.code == 'email-already-in-use'){
         customSnackbar('Email Error', e.message);
-        // return false;
-        
-  
+
       }
       else if (e.code == 'weak-password'){
         customSnackbar('Weak Password', e.message);
-        // return false;
   
 
       } else {
         customSnackbar('Error is ${e.code}', e.message);
-        // return false;
   
       }
     }
@@ -89,18 +88,15 @@ class GetAuthentication extends GetxController{
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email'){
           customSnackbar('Invalid Email', e.message);
-          // return false;
+
       }
       else if (e.code == 'user-not-found'){
         customSnackbar('User not found', e.message);
-        // return false;
       }else if (e.code == 'invalid-credential'){
         customSnackbar('Invalid Credential', 'Email is wrong');
-        // return false;
       } 
       else {
         customSnackbar('Error is ${e.code}', '${e.message}');
-        // return false;
       }
     }
     return null;
@@ -111,29 +107,25 @@ class GetAuthentication extends GetxController{
         final credential = await _auth?.signInWithEmailAndPassword(
         email: email,
         password: password);
-  
+        Get.offAllNamed('/home');
+        Get.deleteAll();
         return credential?.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email'){
           customSnackbar('Invalid Email', e.message);
-          // return false;
+
       }
       else if (e.code == 'user-not-found'){
         customSnackbar('User not found', e.message);
-        // return false;
       }
       else if (e.code == 'wrong-password'){
         customSnackbar('Wrong Password', e.message);
-        // return false;
-      
-      }else if (e.code == 'invalid-credential'){
+      }else if (e.code == 'invalid-credential') {
         customSnackbar('Invalid Credential', 'Email or Password is wrong or both of them');
-        // return false;
+        
       } 
       else {
         customSnackbar('Error is ${e.code}', '${e.message}');
-        // return false;
-  
       }
     }
     return null;
@@ -156,8 +148,9 @@ class GetAuthentication extends GetxController{
 
   // Once signed in, return the UserCredential
     final authResult = await _auth?.signInWithCredential(credential).then((user) async{
-      saveUser(user);
+      await saveUser(user);
     });
+    Get.offAllNamed('/home');
     return authResult;
 
     }on FirebaseAuthException catch (e) {
@@ -178,11 +171,11 @@ class GetAuthentication extends GetxController{
     myServices.sharedPreferences.clear();
   }
 
-  void saveUser(UserCredential user) async{
+  Future<void> saveUser(UserCredential? user) async{
     await FireStoreUser().addUserToFireStore(UserModel(
-      userId: user.user?.uid,
-      email: user.user?.email,
-      name: user.user?.displayName,
+      userId: user?.user?.uid,
+      email: user?.user?.email,
+      name: username ?? user?.user?.displayName,
       pic: ''
     ));
   }

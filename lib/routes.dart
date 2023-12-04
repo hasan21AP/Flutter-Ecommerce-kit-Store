@@ -19,31 +19,31 @@ import 'view/screens/admin/admin_view.dart';
 
     GetPage(name: AppRoutes.signIn, page:() => const SignInView(), 
     transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 400)
+    transitionDuration: const Duration(milliseconds: 600)
     ),
     GetPage(name: AppRoutes.signUp, page:() => const SignUpView(), 
     transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 400)
+    transitionDuration: const Duration(milliseconds: 600)
     ),
     GetPage(name: AppRoutes.home, page:() => const HomeView(), 
-    transition: Transition.fade, 
-    transitionDuration: const Duration(milliseconds: 400)
+    transition: Transition.fadeIn, 
+    transitionDuration: const Duration(milliseconds: 600)
     ),
     GetPage(name: AppRoutes.forgetPassword, page:() => const ForgetPasswordView(), 
     transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 400)
+    transitionDuration: const Duration(milliseconds: 600)
     ),
     GetPage(name: AppRoutes.verifyCode, page:() => const VerifyCodeView(), 
     transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 400)
+    transitionDuration: const Duration(milliseconds: 600)
     ),
     GetPage(name: AppRoutes.admin, page:() => const AdminView(), 
     transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 400)
+    transitionDuration: const Duration(milliseconds: 600)
     ),
     GetPage(name: AppRoutes.addProduct, page:() => const AddProductView(), 
     transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 400)
+    transitionDuration: const Duration(milliseconds: 600)
     ),
     
   ];

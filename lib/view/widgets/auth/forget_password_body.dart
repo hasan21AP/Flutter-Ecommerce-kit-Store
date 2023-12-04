@@ -8,16 +8,14 @@ import 'package:ecommerce_kit_store/data/model/text_field_model/general_text_fie
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ForgetPasswordBody extends StatelessWidget {
+class ForgetPasswordBody extends GetWidget<ForgetPasswordControllerImpl> {
   const ForgetPasswordBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     Get.put(ForgetPasswordControllerImpl());
     return Center(
-      child: GetBuilder<ForgetPasswordControllerImpl>(
-        builder: (controller) {
-          return Column(
+      child: Column(
             children: [
               const UpperSignModel(
                 title: 'Rese Password',
@@ -37,10 +35,10 @@ class ForgetPasswordBody extends StatelessWidget {
                 text: 'Continue',
                 onPressed: () async{
                   if (controller.enterEmail() == true) {
-                      await controller.sendResetPasswordLink(
-                        controller.email.text
-                      );
-                      if (!context.mounted) return;
+                    await controller.sendResetPasswordLink(
+                      controller.email.text
+                    );
+                    if (!context.mounted) return;
                       AwesomeDialog(
                         context: context,
                         title: 'Reset Password',
@@ -55,13 +53,11 @@ class ForgetPasswordBody extends StatelessWidget {
                           controller.goToSignInPage();
                         },
                     ).show();
-                  }
-                },
-              ),
-            ],
-          );
-        }
-      ),
+              }
+            },
+          ),
+        ],
+      )
     );
   }
 }

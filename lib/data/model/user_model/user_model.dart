@@ -19,10 +19,10 @@ class UserModel {
   Map<String, dynamic> toJson(){
     final Map<String, dynamic> data = {};
 
-    if (userId != null) data['userId'] = userId!;
-    if (email != null) data['email'] = email!;
-    if (name != null) data['name'] = name!;
-    if (pic != null) data['pic'] = pic!;
+    if (userId != null) data['userId'] = userId;
+    if (email != null) data['email'] = email;
+    if (name != null) data['name'] = name;
+    if (pic != null) data['pic'] = pic;
 
     return data;
   }
